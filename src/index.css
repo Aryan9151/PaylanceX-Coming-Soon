@@ -3,141 +3,82 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    color-scheme: dark;
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   html {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
-    margin: 0;
-    background-color: #03060f;
-    color: #e6f3ff;
-    font-family: 'Inter', system-ui, sans-serif;
+    @apply bg-ink-950 text-neon-50 font-sans antialiased;
     overflow-x: hidden;
   }
 
   ::selection {
-    background: rgba(26, 140, 255, 0.3);
-    color: #ffffff;
+    @apply bg-neon-500/30 text-white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-ink-950;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-ink-700 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-neon-700;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-neon-300 ring-offset-2 ring-offset-ink-950;
   }
 }
 
 @layer components {
   .glass {
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.07) 0%,
-      rgba(255, 255, 255, 0.02) 100%
-    );
-    backdrop-filter: blur(20px) saturate(140%);
-    -webkit-backdrop-filter: blur(20px) saturate(140%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    @apply bg-white/[0.03] backdrop-blur-xl border border-white/[0.06];
   }
 
   .glass-strong {
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.1) 0%,
-      rgba(255, 255, 255, 0.03) 100%
-    );
-    backdrop-filter: blur(28px) saturate(160%);
-    -webkit-backdrop-filter: blur(28px) saturate(160%);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    @apply bg-white/[0.05] backdrop-blur-2xl border border-white/[0.08];
   }
 
   .text-gradient {
-    background: linear-gradient(180deg, #ffffff 0%, #bfe0ff 60%, #4da6ff 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+    @apply bg-gradient-to-b from-white via-white to-neon-100/60 bg-clip-text text-transparent;
   }
 
   .text-gradient-neon {
-    background: linear-gradient(135deg, #80c2ff 0%, #1a8cff 50%, #22d3ee 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+    @apply bg-gradient-to-br from-neon-200 to-neon-500 bg-clip-text text-transparent;
   }
 
-  .shimmer-text {
-    background: linear-gradient(
-      90deg,
-      rgba(191, 224, 255, 0.7) 0%,
-      #ffffff 50%,
-      rgba(191, 224, 255, 0.7) 100%
-    );
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-neon-400 to-neon-600 px-7 py-3.5 text-sm font-semibold text-white shadow-neon transition-all duration-300 hover:shadow-neon-lg hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full glass px-6 py-3.5 text-sm font-medium text-neon-100/80 transition hover:text-white hover:ring-1 hover:ring-neon-300/40;
   }
 }
 
 @layer utilities {
-  .perspective {
-    perspective: 1200px;
-  }
-
-  .preserve-3d {
-    transform-style: preserve-3d;
-  }
-
-  .bg-grid {
-    background-image:
-      linear-gradient(to right, rgba(26, 140, 255, 0.07) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(26, 140, 255, 0.07) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
-
-  .bg-radial-glow {
-    background: radial-gradient(
-      ellipse 80% 60% at 50% 0%,
-      rgba(26, 140, 255, 0.18) 0%,
-      rgba(26, 140, 255, 0.05) 40%,
-      transparent 70%
-    );
-  }
-
-  .mask-fade-b {
-    -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-  }
-
   .mask-fade-edges {
-    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 50%, transparent 90%);
-    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 50%, transparent 90%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 80%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 80%);
   }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #03060f;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(26, 140, 255, 0.3);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(26, 140, 255, 0.5);
-}
-
-/* Scroll reveal */
 .reveal {
   opacity: 0;
   transform: translateY(28px);
   transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
 }
 
 .reveal-visible {
@@ -152,5 +93,10 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
   }
 }

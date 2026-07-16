@@ -4,52 +4,56 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        display: ['Space Grotesk', 'system-ui', 'sans-serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Space Grotesk', 'Inter', 'sans-serif'],
       },
       colors: {
         ink: {
           950: '#03060f',
-          900: '#060a18',
-          800: '#0a1024',
-          700: '#0f1731',
+          900: '#070b18',
+          800: '#0c1220',
+          700: '#131c30',
+          600: '#1a2640',
         },
         neon: {
-          50: '#e6f3ff',
-          100: '#bfe0ff',
-          200: '#80c2ff',
-          300: '#4da6ff',
-          400: '#1a8cff',
-          500: '#0066ff',
-          600: '#0052cc',
-          700: '#003d99',
+          50: '#eaf4ff',
+          100: '#d0e8ff',
+          200: '#a8d1ff',
+          300: '#7ab9ff',
+          400: '#4da6ff',
+          500: '#1a8cff',
+          600: '#0070f0',
+          700: '#0058c0',
         },
         accent: {
-          400: '#22d3ee',
-          500: '#06b6d4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6',
+          600: '#0d9488',
         },
+      },
+      backgroundImage: {
+        'radial-glow':
+          'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(26,140,255,0.12), transparent 70%)',
+        grid: "linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px)",
+      },
+      backgroundSize: {
+        grid: '64px 64px',
       },
       boxShadow: {
-        'neon-sm': '0 0 12px rgba(26, 140, 255, 0.45)',
-        neon: '0 0 24px rgba(26, 140, 255, 0.55), 0 0 48px rgba(26, 140, 255, 0.25)',
-        'neon-lg': '0 0 40px rgba(26, 140, 255, 0.6), 0 0 80px rgba(26, 140, 255, 0.3)',
-        glass: 'inset 0 1px 0 0 rgba(255,255,255,0.08), 0 20px 60px -20px rgba(0,0,0,0.7)',
+        neon: '0 0 20px rgba(77,166,255,0.3)',
+        'neon-sm': '0 0 10px rgba(77,166,255,0.4)',
+        'neon-lg': '0 0 40px rgba(77,166,255,0.5)',
+        glass: '0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.05)',
+      },
+      animation: {
+        riseIn: 'riseIn 0.9s cubic-bezier(0.22,1,0.36,1) forwards',
+        fadeScale: 'fadeScale 0.35s cubic-bezier(0.22,1,0.36,1) forwards',
+        pulseGlow: 'pulseGlow 4s ease-in-out infinite',
+        floatUp: 'floatUp linear infinite',
+        shimmer: 'shimmer 2.5s ease-in-out infinite',
       },
       keyframes: {
-        floatUp: {
-          '0%': { transform: 'translateY(0) translateX(0)', opacity: '0' },
-          '10%': { opacity: '1' },
-          '90%': { opacity: '1' },
-          '100%': { transform: 'translateY(-120vh) translateX(20px)', opacity: '0' },
-        },
-        pulseGlow: {
-          '0%, 100%': { opacity: '0.5', transform: 'scale(1)' },
-          '50%': { opacity: '0.85', transform: 'scale(1.05)' },
-        },
-        shimmer: {
-          '0%': { backgroundPosition: '-200% 0' },
-          '100%': { backgroundPosition: '200% 0' },
-        },
         riseIn: {
           '0%': { opacity: '0', transform: 'translateY(24px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
@@ -58,22 +62,20 @@ export default {
           '0%': { opacity: '0', transform: 'scale(0.96)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
         },
-        gridMove: {
-          '0%': { backgroundPosition: '0 0' },
-          '100%': { backgroundPosition: '60px 60px' },
+        pulseGlow: {
+          '0%, 100%': { opacity: '0.4' },
+          '50%': { opacity: '0.8' },
         },
-        orbit: {
-          '0%': { transform: 'rotate(0deg) translateX(0) rotate(0deg)' },
-          '100%': { transform: 'rotate(360deg) translateX(0) rotate(-360deg)' },
+        floatUp: {
+          '0%': { transform: 'translateY(0) translateX(0)', opacity: '0' },
+          '10%': { opacity: '1' },
+          '90%': { opacity: '1' },
+          '100%': { transform: 'translateY(-100vh) translateX(var(--tw-translate-x, 0))', opacity: '0' },
         },
-      },
-      animation: {
-        floatUp: 'floatUp linear infinite',
-        pulseGlow: 'pulseGlow 6s ease-in-out infinite',
-        shimmer: 'shimmer 8s linear infinite',
-        riseIn: 'riseIn 1s cubic-bezier(0.22, 1, 0.36, 1) forwards',
-        fadeScale: 'fadeScale 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards',
-        gridMove: 'gridMove 20s linear infinite',
+        shimmer: {
+          '0%, 100%': { opacity: '0.5' },
+          '50%': { opacity: '1' },
+        },
       },
     },
   },
