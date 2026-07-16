@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+/* ----------------------------- Types ----------------------------- */
+
 type SEOConfig = {
   title: string;
   description: string;
@@ -11,7 +13,9 @@ type SEOConfig = {
 };
 
 const SITE_URL = 'https://paylancex.com';
-const DEFAULT_OG = `${SITE_URL}/logo.png`;
+const DEFAULT_OG_IMAGE = `${SITE_URL}/WhatsApp_Image_2026-05-27_at_12.55.50_AM-removebg-preview.png`;
+
+/* ----------------------------- Helpers ----------------------------- */
 
 function setMeta(attr: 'name' | 'property', key: string, content: string) {
   let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
@@ -52,29 +56,28 @@ function removeMeta(attr: 'name' | 'property', key: string) {
   document.head.querySelector(`meta[${attr}="${key}"]`)?.remove();
 }
 
+/* ----------------------------- Hook ----------------------------- */
+
 export function useSEO(config: SEOConfig) {
-  const {
-    title,
-    description,
-    canonical,
-    ogType = 'website',
-    ogImage = DEFAULT_OG,
-    noIndex = false,
-    jsonLd,
-  } = config;
+  const { title, description, canonical, ogType = 'website', ogImage = DEFAULT_OG_IMAGE, noIndex = false, jsonLd } = config;
 
   useEffect(() => {
     document.title = title;
+
+    // Standard meta
     setMeta('name', 'description', description);
 
+    // Robots
     if (noIndex) {
       setMeta('name', 'robots', 'noindex, nofollow');
     } else {
       removeMeta('name', 'robots');
     }
 
+    // Canonical
     setLink('canonical', canonical);
 
+    // Open Graph
     setMeta('property', 'og:title', title);
     setMeta('property', 'og:description', description);
     setMeta('property', 'og:type', ogType);
@@ -83,11 +86,13 @@ export function useSEO(config: SEOConfig) {
     setMeta('property', 'og:site_name', 'PaylanceX');
     setMeta('property', 'og:locale', 'en_US');
 
+    // Twitter Card
     setMeta('name', 'twitter:card', 'summary_large_image');
     setMeta('name', 'twitter:title', title);
     setMeta('name', 'twitter:description', description);
     setMeta('name', 'twitter:image', ogImage);
 
+    // JSON-LD
     if (jsonLd) {
       setJsonLd('page-jsonld', jsonLd);
     }
@@ -98,12 +103,14 @@ export function useSEO(config: SEOConfig) {
   }, [title, description, canonical, ogType, ogImage, noIndex, jsonLd]);
 }
 
+/* ----------------------------- Shared JSON-LD Schemas ----------------------------- */
+
 export const ORGANIZATION_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'PaylanceX',
   url: SITE_URL,
-  logo: `${SITE_URL}/logo.png`,
+  logo: `${SITE_URL}/WhatsApp_Image_2026-05-27_at_12.55.50_AM-removebg-preview.png`,
   description:
     'PaylanceX is a technology company building thoughtful, reliable, and future-ready products.',
   founder: {
@@ -118,10 +125,14 @@ export const WEBSITE_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'PaylanceX',
-  alternateName: 'PaylanceX',
   url: SITE_URL,
   description:
     'PaylanceX — building the future of technology. Something extraordinary is coming.',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${SITE_URL}/founder`,
+    'url-template': `${SITE_URL}/founder`,
+  },
 };
 
 export const PERSON_SCHEMA = {
@@ -134,15 +145,8 @@ export const PERSON_SCHEMA = {
     name: 'PaylanceX',
   },
   url: `${SITE_URL}/founder`,
-  image: `${SITE_URL}/aryan-gupta.jpg`,
+  image: `${SITE_URL}/WhatsApp_Image_2026-07-16_at_10.29.36_AM.jpeg`,
   sameAs: ['https://www.linkedin.com/in/aryan-gupta-823b74252'],
-};
-
-export const CONTACT_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'ContactPage',
-  name: 'Contact PaylanceX',
-  url: `${SITE_URL}/contact`,
 };
 
 export { SITE_URL };
