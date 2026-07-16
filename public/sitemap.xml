@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://paylancex.com/</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://paylancex.com/WhatsApp_Image_2026-05-27_at_12.55.50_AM-removebg-preview.png</image:loc>
+      <image:title>PaylanceX Logo</image:title>
+      <image:caption>PaylanceX — Something Extraordinary Is Coming</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://paylancex.com/founder</loc>
+    <lastmod>2026-07-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://paylancex.com/WhatsApp_Image_2026-07-16_at_10.29.36_AM.jpeg</image:loc>
+      <image:title>Aryan Gupta - Founder &amp; CEO of PaylanceX</image:title>
+      <image:caption>Aryan Gupta, Founder &amp; CEO of PaylanceX</image:caption>
+    </image:image>
+  </url>
+</urlset>

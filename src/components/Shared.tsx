@@ -107,7 +107,7 @@ export function Logo({ to = '/' }: { to?: string }) {
       <div className="relative">
         <div className="absolute inset-0 rounded-xl bg-neon-400 blur-md opacity-50 animate-pulseGlow" />
         <div className="relative h-12 w-12 overflow-hidden rounded-xl bg-ink-800 p-1.5 shadow-neon ring-1 ring-white/10">
-          <img src={LOGO_SRC} alt="PaylanceX" className="h-full w-full object-contain" />
+          <img src={LOGO_SRC} alt="PaylanceX logo" width={48} height={48} loading="eager" decoding="async" className="h-full w-full object-contain" />
         </div>
       </div>
       <span className="font-display text-2xl font-bold tracking-tight text-gradient">
@@ -148,7 +148,7 @@ export function Navbar() {
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <Link to="/" className="flex items-center gap-2.5">
           <div className="h-8 w-8 overflow-hidden rounded-lg bg-ink-800 p-0.5 ring-1 ring-white/10">
-            <img src={LOGO_SRC} alt="PaylanceX" className="h-full w-full object-contain" />
+          <img src={LOGO_SRC} alt="PaylanceX logo" width={48} height={48} loading="eager" decoding="async" className="h-full w-full object-contain" />
           </div>
           <span className="font-display text-lg font-bold tracking-tight text-gradient">
             PaylanceX
@@ -448,7 +448,7 @@ export function Footer({ onLegal }: FooterProps) {
       <div className="flex flex-col items-center justify-between gap-6 border-t border-white/5 pt-8 sm:flex-row">
         <div className="flex items-center gap-2.5">
           <div className="h-7 w-7 overflow-hidden rounded-lg bg-ink-800 p-0.5 ring-1 ring-white/10">
-            <img src={LOGO_SRC} alt="PaylanceX" className="h-full w-full object-contain" />
+          <img src={LOGO_SRC} alt="PaylanceX logo" width={48} height={48} loading="eager" decoding="async" className="h-full w-full object-contain" />
           </div>
           <span className="text-sm text-neon-100/50">
             © 2026 PaylanceX. All Rights Reserved.

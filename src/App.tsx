@@ -10,12 +10,22 @@ import {
   LegalModal,
   Footer,
 } from './components/Shared';
+import { useSEO, ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from './hooks/useSEO';
 
 /* ----------------------------- Landing Page ----------------------------- */
 
 function LandingPage() {
   const [contactOpen, setContactOpen] = useState(false);
   const [legalOpen, setLegalOpen] = useState<'privacy' | 'terms' | null>(null);
+
+  useSEO({
+    title: 'PaylanceX — Something Extraordinary Is Coming',
+    description:
+      'PaylanceX is building thoughtful, reliable, and future-ready technology. Something extraordinary is coming — the future of digital experiences, launching soon.',
+    canonical: 'https://paylancex.com/',
+    ogImage: 'https://paylancex.com/WhatsApp_Image_2026-05-27_at_12.55.50_AM-removebg-preview.png',
+    jsonLd: [ORGANIZATION_SCHEMA, WEBSITE_SCHEMA],
+  });
 
   return (
     <div className="relative flex min-h-screen flex-col">

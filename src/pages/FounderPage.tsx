@@ -20,84 +20,19 @@ import {
   LegalModal,
   StatusPill,
 } from '../components/Shared';
+import { useSEO, PERSON_SCHEMA, ORGANIZATION_SCHEMA } from '../hooks/useSEO';
 
 /* ----------------------------- SEO ----------------------------- */
 
-function useSEO() {
-  useEffect(() => {
-    document.title = 'Aryan Gupta | Founder & CEO of PaylanceX';
-
-    const setMeta = (name: string, content: string, attr: 'name' | 'property' = 'name') => {
-      let el = document.querySelector<HTMLMetaElement>(`meta[${attr}="${name}"]`);
-      if (!el) {
-        el = document.createElement('meta');
-        el.setAttribute(attr, name);
-        document.head.appendChild(el);
-      }
-      el.setAttribute('content', content);
-    };
-
-    setMeta(
-      'description',
-      'Learn about Aryan Gupta, Founder & CEO of PaylanceX, his vision, journey and mission to build trusted technology.'
-    );
-    setMeta(
-      'og:title',
-      'Aryan Gupta | Founder & CEO of PaylanceX',
-      'property'
-    );
-    setMeta(
-      'og:description',
-      'Learn about Aryan Gupta, Founder & CEO of PaylanceX, his vision, journey and mission to build trusted technology.',
-      'property'
-    );
-    setMeta('og:type', 'website', 'property');
-    setMeta('twitter:card', 'summary_large_image');
-    setMeta('twitter:title', 'Aryan Gupta | Founder & CEO of PaylanceX');
-    setMeta(
-      'twitter:description',
-      'Learn about Aryan Gupta, Founder & CEO of PaylanceX, his vision, journey and mission to build trusted technology.'
-    );
-
-    const setLink = (rel: string, href: string) => {
-      let el = document.querySelector<HTMLLinkElement>(`link[rel="${rel}"]`);
-      if (!el) {
-        el = document.createElement('link');
-        el.setAttribute('rel', rel);
-        document.head.appendChild(el);
-      }
-      el.setAttribute('href', href);
-    };
-    setLink('canonical', 'https://paylancex.com/founder');
-
-    const jsonLd = {
-      '@context': 'https://schema.org',
-      '@type': 'Person',
-      name: 'Aryan Gupta',
-      jobTitle: 'Founder & CEO',
-      worksFor: {
-        '@type': 'Organization',
-        name: 'PaylanceX',
-      },
-      url: 'https://paylancex.com/founder',
-      sameAs: ['https://www.linkedin.com/in/aryan-gupta-823b74252'],
-    };
-
-    let script = document.getElementById('founder-jsonld');
-    if (!script) {
-      script = document.createElement('script');
-      script.id = 'founder-jsonld';
-      script.setAttribute('type', 'application/ld+json');
-      document.head.appendChild(script);
-    }
-    script.textContent = JSON.stringify(jsonLd);
-
-    return () => {
-      // Restore landing title when leaving
-      document.title = 'PaylanceX — Something Extraordinary Is Coming';
-    };
-  }, []);
-}
+const FOUNDER_SEO = {
+  title: 'Aryan Gupta | Founder & CEO of PaylanceX',
+  description:
+    'Learn about Aryan Gupta, Founder & CEO of PaylanceX, his vision, journey and mission to build trusted technology.',
+  canonical: 'https://paylancex.com/founder',
+  ogType: 'profile',
+  ogImage: 'https://paylancex.com/WhatsApp_Image_2026-07-16_at_10.29.36_AM.jpeg',
+  jsonLd: [PERSON_SCHEMA, ORGANIZATION_SCHEMA],
+};
 
 /* ----------------------------- Scroll Reveal ----------------------------- */
 
@@ -186,6 +121,10 @@ function Hero() {
               <img
                 src="/WhatsApp_Image_2026-07-16_at_10.29.36_AM.jpeg"
                 alt="Aryan Gupta - Founder & CEO of PaylanceX"
+                width={144}
+                height={144}
+                loading="eager"
+                decoding="async"
                 className="h-full w-full object-cover object-top"
                 draggable={false}
               />
@@ -276,6 +215,10 @@ function About() {
                       <img
                         src="/WhatsApp_Image_2026-07-16_at_10.29.36_AM.jpeg"
                         alt="Aryan Gupta - Founder & CEO of PaylanceX"
+                        width={96}
+                        height={96}
+                        loading="lazy"
+                        decoding="async"
                         className="h-full w-full object-cover object-top"
                         draggable={false}
                       />
@@ -601,7 +544,7 @@ function Connect() {
 /* ----------------------------- Page ----------------------------- */
 
 export default function FounderPage() {
-  useSEO();
+  useSEO(FOUNDER_SEO);
   useReveal();
   const [contactOpen, setContactOpen] = useState(false);
   const [legalOpen, setLegalOpen] = useState<'privacy' | 'terms' | null>(null);
