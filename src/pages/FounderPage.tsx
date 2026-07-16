@@ -180,10 +180,15 @@ function Hero() {
           className="mx-auto mt-10 opacity-0 animate-riseIn"
           style={{ animationDelay: '0.3s' }}
         >
-          <div className="relative mx-auto h-32 w-32">
-            <div className="absolute inset-0 rounded-full bg-neon-400/40 blur-2xl animate-pulseGlow" />
-            <div className="relative grid h-32 w-32 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-neon-400/20 to-ink-800 ring-2 ring-neon-300/30">
-              <span className="font-display text-5xl font-bold text-gradient-neon">AG</span>
+          <div className="relative mx-auto h-36 w-36">
+            <div className="absolute inset-0 scale-105 rounded-full bg-neon-400/40 blur-2xl animate-pulseGlow" />
+            <div className="relative h-36 w-36 overflow-hidden rounded-full ring-2 ring-neon-300/50 shadow-[0_0_32px_rgba(77,166,255,0.35)]">
+              <img
+                src="/WhatsApp_Image_2026-07-16_at_10.29.36_AM.jpeg"
+                alt="Aryan Gupta - Founder & CEO of PaylanceX"
+                className="h-full w-full object-cover object-top"
+                draggable={false}
+              />
             </div>
           </div>
         </div>
@@ -266,9 +271,14 @@ function About() {
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-neon-300/80 to-transparent" />
                 <div className="flex flex-col items-center text-center">
                   <div className="relative">
-                    <div className="absolute inset-0 rounded-full bg-neon-400/30 blur-xl animate-pulseGlow" />
-                    <div className="relative grid h-24 w-24 place-items-center overflow-hidden rounded-full bg-gradient-to-br from-neon-400/20 to-ink-800 ring-2 ring-neon-300/30">
-                      <span className="font-display text-3xl font-bold text-gradient-neon">AG</span>
+                    <div className="absolute inset-0 scale-110 rounded-full bg-neon-400/30 blur-xl animate-pulseGlow" />
+                    <div className="relative h-24 w-24 overflow-hidden rounded-full ring-2 ring-neon-300/40 shadow-[0_0_24px_rgba(77,166,255,0.3)]">
+                      <img
+                        src="/WhatsApp_Image_2026-07-16_at_10.29.36_AM.jpeg"
+                        alt="Aryan Gupta - Founder & CEO of PaylanceX"
+                        className="h-full w-full object-cover object-top"
+                        draggable={false}
+                      />
                     </div>
                   </div>
                   <h3 className="mt-5 font-display text-xl font-bold text-white">Aryan Gupta</h3>
