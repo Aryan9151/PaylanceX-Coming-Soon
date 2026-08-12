@@ -58,6 +58,17 @@ export function Particles({ count = 30 }: { count?: number }) {
 
 /* ----------------------------- Navbar ----------------------------- */
 
+export function Logo() {
+  return (
+    <Link to="/" className="flex items-center gap-2.5">
+      <div className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-neon-400 to-neon-600 shadow-[0_0_16px_rgba(77,166,255,0.4)]">
+        <span className="font-display text-sm font-bold text-white">P</span>
+      </div>
+      <span className="font-display text-lg font-bold text-white">PaylanceX</span>
+    </Link>
+  );
+}
+
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -87,12 +98,7 @@ export function Navbar() {
       }`}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link to="/" className="flex items-center gap-2.5">
-          <div className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-neon-400 to-neon-600 shadow-[0_0_16px_rgba(77,166,255,0.4)]">
-            <span className="font-display text-sm font-bold text-white">P</span>
-          </div>
-          <span className="font-display text-lg font-bold text-white">PaylanceX</span>
-        </Link>
+        <Logo />
 
         <div className="hidden items-center gap-1 md:flex">
           {navLinks.map((link) => (
