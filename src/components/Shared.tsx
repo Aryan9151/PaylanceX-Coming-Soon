@@ -1,56 +1,54 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Mail, ArrowRight, X, Shield, FileText, Menu } from 'lucide-react';
+import { Menu, X, Mail, Shield, FileText, Building2, MapPin, BadgeCheck, Sparkles } from 'lucide-react';
 
-export const LOGO_SRC = '/WhatsApp_Image_2026-05-27_at_12.55.50_AM-removebg-preview.png';
+/* ----------------------------- Background ----------------------------- */
 
-/* ----------------------------- Floating Particles ----------------------------- */
-
-type Particle = {
-  id: number;
-  left: number;
-  size: number;
-  duration: number;
-  delay: number;
-  drift: number;
-  opacity: number;
-};
-
-function useParticles(count = 28) {
-  return useMemo<Particle[]>(() => {
-    const arr: Particle[] = [];
-    for (let i = 0; i < count; i++) {
-      arr.push({
-        id: i,
-        left: Math.random() * 100,
-        size: Math.random() * 4 + 1.5,
-        duration: Math.random() * 18 + 14,
-        delay: Math.random() * 20,
-        drift: (Math.random() - 0.5) * 60,
-        opacity: Math.random() * 0.5 + 0.2,
-      });
-    }
-    return arr;
-  }, [count]);
+export function Background() {
+  return (
+    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+      <div className="absolute inset-0 bg-[#05070d]" />
+      <div className="absolute left-1/2 top-0 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-neon-600/10 blur-[120px]" />
+      <div className="absolute bottom-0 right-0 h-[400px] w-[500px] rounded-full bg-accent-500/5 blur-[100px]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(77,166,255,0.06),transparent_60%)]" />
+      <div
+        className="absolute inset-0 opacity-[0.015]"
+        style={{
+          backgroundImage:
+            'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'60\' height=\'60\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence baseFrequency=\'0.9\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")',
+        }}
+      />
+    </div>
+  );
 }
 
-export function Particles() {
-  const particles = useParticles(30);
+/* ----------------------------- Particles ----------------------------- */
+
+export function Particles({ count = 30 }: { count?: number }) {
+  const particles = useMemo(
+    () =>
+      Array.from({ length: count }).map((_, i) => ({
+        id: i,
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        size: Math.random() * 2 + 1,
+        delay: Math.random() * 5,
+        duration: Math.random() * 4 + 4,
+      })),
+    [count]
+  );
   return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
+    <div className="pointer-events-none fixed inset-0 -z-5 overflow-hidden">
       {particles.map((p) => (
         <span
           key={p.id}
-          className="absolute bottom-0 rounded-full bg-neon-300 animate-floatUp"
+          className="absolute rounded-full bg-neon-300/30"
           style={{
             left: `${p.left}%`,
-            width: `${p.size}px`,
-            height: `${p.size}px`,
-            opacity: p.opacity,
-            animationDuration: `${p.duration}s`,
-            animationDelay: `${p.delay}s`,
-            boxShadow: '0 0 8px rgba(77, 166, 255, 0.8), 0 0 16px rgba(26, 140, 255, 0.4)',
-            ['--tw-translate-x' as string]: `${p.drift}px`,
+            top: `${p.top}%`,
+            width: p.size,
+            height: p.size,
+            animation: `floatY ${p.duration}s ease-in-out ${p.delay}s infinite`,
           }}
         />
       ))}
@@ -58,112 +56,52 @@ export function Particles() {
   );
 }
 
-/* ----------------------------- Background Layers ----------------------------- */
-
-export function Background() {
-  return (
-    <div className="fixed inset-0 -z-10 overflow-hidden bg-ink-950" aria-hidden>
-      {/* Deep radial glow from top */}
-      <div className="absolute inset-0 bg-radial-glow" />
-
-      {/* Animated grid */}
-      <div className="absolute inset-0 bg-grid mask-fade-edges animate-gridMove opacity-60" />
-
-      {/* Large ambient orbs */}
-      <div className="absolute -top-40 left-1/2 h-[600px] w-[600px] -translate-x-1/2 rounded-full bg-neon-500/20 blur-[140px] animate-pulseGlow" />
-      <div
-        className="absolute top-1/3 -left-32 h-[400px] w-[400px] rounded-full bg-accent-500/10 blur-[120px] animate-pulseGlow"
-        style={{ animationDelay: '2s' }}
-      />
-      <div
-        className="absolute bottom-0 -right-32 h-[450px] w-[450px] rounded-full bg-neon-400/15 blur-[130px] animate-pulseGlow"
-        style={{ animationDelay: '4s' }}
-      />
-
-      {/* Vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,#03060f_100%)]" />
-
-      {/* Noise texture overlay */}
-      <div
-        className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-        }}
-      />
-    </div>
-  );
-}
-
-/* ----------------------------- Logo ----------------------------- */
-
-export function Logo({ to = '/' }: { to?: string }) {
-  return (
-    <Link
-      to={to}
-      className="flex items-center justify-center gap-3 opacity-0 animate-riseIn"
-      style={{ animationDelay: '0.1s' }}
-    >
-      <div className="relative">
-        <div className="absolute inset-0 rounded-xl bg-neon-400 blur-md opacity-50 animate-pulseGlow" />
-        <div className="relative h-12 w-12 overflow-hidden rounded-xl bg-ink-800 p-1.5 shadow-neon ring-1 ring-white/10">
-          <img src={LOGO_SRC} alt="PaylanceX logo" width={48} height={48} loading="eager" decoding="async" className="h-full w-full object-contain" />
-        </div>
-      </div>
-      <span className="font-display text-2xl font-bold tracking-tight text-gradient">
-        PaylanceX
-      </span>
-    </Link>
-  );
-}
-
 /* ----------------------------- Navbar ----------------------------- */
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   useEffect(() => {
-    setMobileOpen(false);
+    setMenuOpen(false);
   }, [location.pathname]);
 
-  const navLinks = [{ to: '/founder', label: 'Founder' }];
+  const navLinks = [
+    { to: '/', label: 'Home' },
+    { to: '/about', label: 'About' },
+    { to: '/founder', label: 'Founder' },
+    { to: '/contact', label: 'Contact' },
+  ];
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-40 transition-all duration-500 ${
-        scrolled
-          ? 'border-b border-white/5 bg-ink-950/70 backdrop-blur-xl'
-          : 'border-b border-transparent bg-transparent'
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        scrolled ? 'border-b border-white/5 bg-[#05070d]/80 backdrop-blur-xl' : ''
       }`}
     >
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
+      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-2.5">
-          <div className="h-8 w-8 overflow-hidden rounded-lg bg-ink-800 p-0.5 ring-1 ring-white/10">
-          <img src={LOGO_SRC} alt="PaylanceX logo" width={48} height={48} loading="eager" decoding="async" className="h-full w-full object-contain" />
+          <div className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-neon-400 to-neon-600 shadow-[0_0_16px_rgba(77,166,255,0.4)]">
+            <span className="font-display text-sm font-bold text-white">P</span>
           </div>
-          <span className="font-display text-lg font-bold tracking-tight text-gradient">
-            PaylanceX
-          </span>
+          <span className="font-display text-lg font-bold text-white">PaylanceX</span>
         </Link>
 
-        {/* Desktop nav */}
-        <div className="hidden items-center gap-1 sm:flex">
+        <div className="hidden items-center gap-1 md:flex">
           {navLinks.map((link) => (
             <Link
               key={link.to}
               to={link.to}
-              className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              className={`rounded-lg px-4 py-2 text-sm font-medium transition ${
                 location.pathname === link.to
-                  ? 'text-white ring-1 ring-neon-300/30'
+                  ? 'text-neon-300'
                   : 'text-neon-100/60 hover:text-white'
               }`}
             >
@@ -172,28 +110,26 @@ export function Navbar() {
           ))}
         </div>
 
-        {/* Mobile toggle */}
         <button
-          onClick={() => setMobileOpen((v) => !v)}
-          className="grid h-10 w-10 place-items-center rounded-full text-neon-100/70 transition hover:bg-white/5 hover:text-white sm:hidden"
+          className="rounded-lg p-2 text-neon-100/60 transition hover:text-white md:hidden"
+          onClick={() => setMenuOpen((v) => !v)}
           aria-label="Toggle menu"
         >
-          <Menu className="h-5 w-5" />
+          {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </nav>
 
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="border-t border-white/5 bg-ink-950/95 backdrop-blur-xl sm:hidden">
-          <div className="flex flex-col gap-1 px-6 py-4">
+      {menuOpen && (
+        <div className="border-t border-white/5 bg-[#05070d]/95 backdrop-blur-xl md:hidden">
+          <div className="flex flex-col px-6 py-4">
             {navLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className={`rounded-xl px-4 py-3 text-sm font-medium transition ${
+                className={`rounded-lg px-4 py-3 text-sm font-medium transition ${
                   location.pathname === link.to
-                    ? 'bg-white/5 text-white'
-                    : 'text-neon-100/60 hover:bg-white/5 hover:text-white'
+                    ? 'text-neon-300'
+                    : 'text-neon-100/60 hover:text-white'
                 }`}
               >
                 {link.label}
@@ -208,133 +144,241 @@ export function Navbar() {
 
 /* ----------------------------- Status Pill ----------------------------- */
 
-export function StatusPill({ label = 'Launching Soon' }: { label?: string }) {
+export function StatusPill({ label = 'Coming Soon' }: { label?: string }) {
+  return (
+    <div className="inline-flex items-center gap-2 rounded-full glass px-4 py-1.5">
+      <span className="relative flex h-2 w-2">
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-400 opacity-75" />
+        <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-400" />
+      </span>
+      <span className="text-xs font-medium tracking-wide text-neon-100/70">{label}</span>
+    </div>
+  );
+}
+
+/* ----------------------------- Startup Badge ----------------------------- */
+
+export function StartupBadge() {
   return (
     <div
-      className="inline-flex items-center gap-2.5 rounded-full glass px-4 py-1.5 opacity-0 animate-riseIn"
-      style={{ animationDelay: '0.25s' }}
+      className="mt-4 inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 opacity-0 animate-riseIn"
+      style={{ animationDelay: '0.2s' }}
     >
-      <span className="relative flex h-2 w-2">
-        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-neon-300 opacity-75" />
-        <span className="relative inline-flex h-2 w-2 rounded-full bg-neon-300 shadow-neon-sm" />
-      </span>
-      <span className="text-xs font-medium uppercase tracking-[0.2em] text-neon-100">
-        {label}
+      <Sparkles className="h-3.5 w-3.5 text-neon-300" />
+      <span className="text-xs font-medium tracking-wide text-neon-100/80">
+        A Startup by{' '}
+        <span className="font-semibold text-neon-200">Axoryn Technology Pvt. Ltd.</span>
       </span>
     </div>
   );
 }
 
+/* ----------------------------- Reveal ----------------------------- */
+
+export function useReveal() {
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+    );
+    const els = document.querySelectorAll('.reveal');
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+}
+
+export function Reveal({
+  children,
+  delay = 0,
+  className = '',
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`reveal ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/* ----------------------------- Section Heading ----------------------------- */
+
+export function SectionHeading({ eyebrow, title }: { eyebrow: string; title: string }) {
+  return (
+    <div className="text-center">
+      <span className="text-xs font-semibold uppercase tracking-[0.25em] text-neon-300">
+        {eyebrow}
+      </span>
+      <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-gradient sm:text-4xl md:text-5xl">
+        {title}
+      </h2>
+    </div>
+  );
+}
+
+/* ----------------------------- Powered by Axoryn ----------------------------- */
+
+export function PoweredByAxoryn() {
+  return (
+    <section className="relative px-6 py-24">
+      <div className="mx-auto max-w-4xl">
+        <Reveal>
+          <div className="text-center">
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-neon-300">
+              Parent Company
+            </span>
+            <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-gradient sm:text-4xl md:text-5xl">
+              Powered by Axoryn Technology Pvt. Ltd.
+            </h2>
+          </div>
+        </Reveal>
+
+        <Reveal delay={100}>
+          <p className="mx-auto mt-6 max-w-2xl text-center text-base font-light leading-relaxed text-neon-100/60 sm:text-lg">
+            PaylanceX is an innovation developed under Axoryn Technology Pvt. Ltd., an Indian
+            technology company focused on building next-generation digital products, secure
+            financial technology, AI-powered software, and scalable platforms for the future.
+          </p>
+        </Reveal>
+
+        <Reveal delay={200}>
+          <div className="glass-strong relative mt-10 overflow-hidden rounded-3xl p-8 shadow-glass sm:p-10">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-neon-300/80 to-transparent" />
+            <div className="grid gap-6 sm:grid-cols-2">
+              <div className="flex items-start gap-4">
+                <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-neon-300/30 to-neon-600/20 ring-1 ring-white/10">
+                  <Building2 className="h-6 w-6 text-neon-200" />
+                </div>
+                <div>
+                  <h3 className="font-display text-lg font-bold text-white">
+                    Axoryn Technology Pvt. Ltd.
+                  </h3>
+                  <div className="mt-2 inline-flex items-center gap-2 rounded-full bg-accent-500/15 px-3 py-1 ring-1 ring-accent-400/30">
+                    <BadgeCheck className="h-3.5 w-3.5 text-accent-300" />
+                    <span className="text-xs font-medium text-accent-300">
+                      Registered Indian Private Limited Company
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-3 text-sm">
+                <div className="flex items-center gap-3 text-neon-100/60">
+                  <span className="font-medium text-neon-200/80">CIN</span>
+                  <span>U62011UP2026PTC250755</span>
+                </div>
+                <div className="flex items-start gap-3 text-neon-100/60">
+                  <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-neon-300/50" />
+                  <span>Sabji Mandi Gali, Madhuban, Mau, Uttar Pradesh, India</span>
+                </div>
+                <div className="flex items-center gap-3 text-neon-100/60">
+                  <Mail className="h-4 w-4 shrink-0 text-neon-300/50" />
+                  <a
+                    href="mailto:support@paylancex.com"
+                    className="transition hover:text-neon-100"
+                  >
+                    support@paylancex.com
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ----------------------------- About Axoryn Section ----------------------------- */
+
+export function AboutAxorynSection() {
+  return (
+    <section className="relative px-6 py-24">
+      <div className="mx-auto max-w-3xl">
+        <Reveal>
+          <div className="text-center">
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-neon-300">
+              Parent Company
+            </span>
+            <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-gradient sm:text-4xl md:text-5xl">
+              About Axoryn Technology Pvt. Ltd.
+            </h2>
+          </div>
+        </Reveal>
+        <Reveal delay={100}>
+          <div className="glass-strong relative mt-10 overflow-hidden rounded-3xl p-8 shadow-glass sm:p-12">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-neon-300/80 to-transparent" />
+            <div className="relative space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-neon-300/30 to-neon-600/20 ring-1 ring-white/10">
+                  <Building2 className="h-5 w-5 text-neon-200" />
+                </div>
+                <span className="font-display text-sm font-semibold uppercase tracking-wider text-neon-300">
+                  Our Parent Company
+                </span>
+              </div>
+              <p className="text-lg font-light leading-relaxed text-neon-100/80">
+                Axoryn Technology Pvt. Ltd. is the parent company behind PaylanceX. It is an
+                Indian technology company dedicated to building innovative technology products for
+                India and global markets.
+              </p>
+              <p className="text-base font-light leading-relaxed text-neon-100/60">
+                With a focus on next-generation digital products, secure financial technology,
+                AI-powered software, and scalable platforms, Axoryn Technology is committed to
+                creating solutions that are reliable, future-ready, and trusted by millions.
+              </p>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 /* ----------------------------- Contact Modal ----------------------------- */
 
-type ContactModalProps = {
+export function ContactModal({
+  open,
+  onClose,
+}: {
   open: boolean;
   onClose: () => void;
-};
-
-export function ContactModal({ open, onClose }: ContactModalProps) {
-  const [copied, setCopied] = useState(false);
-  const dialogRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-    };
-    document.addEventListener('keydown', onKey);
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
-    };
-  }, [open, onClose]);
-
+}) {
   if (!open) return null;
-
-  const email = 'support@paylancex.com';
-
-  const copyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(email);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1800);
-    } catch {
-      /* clipboard unavailable */
-    }
-  };
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center px-6"
+      onClick={onClose}
+    >
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
       <div
-        className="absolute inset-0 bg-ink-950/70 backdrop-blur-md"
-        onClick={onClose}
-        aria-hidden
-      />
-
-      {/* Dialog */}
-      <div
-        ref={dialogRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="contact-title"
-        className="relative w-full max-w-md animate-fadeScale"
+        className="glass-strong relative w-full max-w-md rounded-3xl p-8 shadow-glass"
+        onClick={(e) => e.stopPropagation()}
       >
-        <div className="glass-strong relative overflow-hidden rounded-3xl p-8 shadow-glass">
-          {/* Top glow line */}
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-neon-300/80 to-transparent" />
-
-          <button
-            onClick={onClose}
-            aria-label="Close"
-            className="absolute right-5 top-5 grid h-9 w-9 place-items-center rounded-full text-neon-100/60 transition hover:bg-white/5 hover:text-white"
-          >
-            <X className="h-4 w-4" />
-          </button>
-
-          <div className="mb-6 flex items-center gap-3">
-            <div className="grid h-11 w-11 place-items-center rounded-2xl bg-gradient-to-br from-neon-300/30 to-neon-600/20 ring-1 ring-white/10">
-              <Mail className="h-5 w-5 text-neon-200" />
-            </div>
-            <div>
-              <h2 id="contact-title" className="font-display text-lg font-semibold text-white">
-                Get in touch
-              </h2>
-              <p className="text-sm text-neon-100/50">We'd love to hear from you.</p>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <button
-              onClick={copyEmail}
-              className="group flex w-full items-center justify-between gap-3 rounded-2xl glass px-5 py-4 text-left transition hover:ring-1 hover:ring-neon-300/40"
-            >
-              <div className="flex items-center gap-3">
-                <Mail className="h-4 w-4 text-neon-300" />
-                <span className="text-sm font-medium text-neon-50">{email}</span>
-              </div>
-              <span
-                className={`text-xs font-semibold uppercase tracking-wider transition ${
-                  copied ? 'text-accent-400' : 'text-neon-200/60 group-hover:text-neon-100'
-                }`}
-              >
-                {copied ? 'Copied' : 'Copy'}
-              </span>
-            </button>
-
-            <a
-              href={`mailto:${email}`}
-              className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-neon-400 to-neon-600 px-5 py-4 text-sm font-semibold text-white shadow-neon transition hover:shadow-neon-lg"
-            >
-              Send an email
-              <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
-            </a>
-          </div>
-
-          <p className="mt-6 text-center text-xs text-neon-100/40">
-            Press ESC to close
-          </p>
-        </div>
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 rounded-lg p-2 text-neon-100/40 transition hover:text-white"
+        >
+          <X className="h-5 w-5" />
+        </button>
+        <h3 className="font-display text-2xl font-bold text-white">Get in Touch</h3>
+        <p className="mt-3 text-sm font-light text-neon-100/60">
+          We'd love to hear from you. Reach out and we'll get back to you soon.
+        </p>
+        <a href="mailto:support@paylancex.com" className="btn-primary mt-6 w-full">
+          <Mail className="h-4 w-4" />
+          support@paylancex.com
+        </a>
       </div>
     </div>
   );
@@ -342,94 +386,74 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
 
 /* ----------------------------- Legal Modal ----------------------------- */
 
-type LegalModalProps = {
+export function LegalModal({
+  open,
+  onClose,
+}: {
   open: 'privacy' | 'terms' | null;
   onClose: () => void;
-};
-
-const LEGAL_CONTENT = {
-  privacy: {
-    title: 'Privacy Policy',
-    icon: Shield,
-    body: [
-      'This Privacy Policy describes how PaylanceX ("we", "us") collects, uses, and shares information when you interact with our website and services.',
-      'We may collect information you provide directly — such as your email address when you contact us — as well as technical data collected automatically, including device type, browser, and usage patterns.',
-      'We use this information to operate, maintain, and improve our services, to respond to your inquiries, and to ensure the security of our platform.',
-      'We do not sell your personal information. We may share data with trusted service providers who act on our behalf under appropriate confidentiality agreements.',
-      'You may request access to, correction of, or deletion of your personal data at any time by contacting support@paylancex.com.',
-      'This policy may be updated periodically. Material changes will be communicated on this page.',
-    ],
-  },
-  terms: {
-    title: 'Terms of Service',
-    icon: FileText,
-    body: [
-      'These Terms of Service govern your access to and use of the PaylanceX website and any related services.',
-      'By accessing our site, you agree to use it only for lawful purposes and in a manner that does not infringe the rights of, or restrict the use of, any other party.',
-      'All content, branding, and intellectual property displayed on this site are owned by PaylanceX and may not be reproduced without prior written consent.',
-      'We reserve the right to modify or discontinue any aspect of our services at any time without prior notice.',
-      'Our services are provided "as is" without warranties of any kind. To the fullest extent permitted by law, we are not liable for any indirect or consequential damages.',
-      'Disputes arising from these terms shall be governed by applicable law in the jurisdiction where PaylanceX operates.',
-    ],
-  },
-} as const;
-
-export function LegalModal({ open, onClose }: LegalModalProps) {
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
-    document.addEventListener('keydown', onKey);
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
-    };
-  }, [open, onClose]);
-
+}) {
   if (!open) return null;
-  const content = LEGAL_CONTENT[open];
-  const Icon = content.icon;
-
+  const isPrivacy = open === 'privacy';
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-ink-950/70 backdrop-blur-md" onClick={onClose} aria-hidden />
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center px-6"
+      onClick={onClose}
+    >
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
       <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="legal-title"
-        className="relative w-full max-w-lg animate-fadeScale"
+        className="glass-strong relative max-h-[80vh] w-full max-w-2xl overflow-y-auto rounded-3xl p-8 shadow-glass"
+        onClick={(e) => e.stopPropagation()}
       >
-        <div className="glass-strong relative max-h-[80vh] overflow-hidden rounded-3xl shadow-glass">
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-neon-300/80 to-transparent" />
-
-          <div className="flex items-center justify-between border-b border-white/5 px-7 py-5">
-            <div className="flex items-center gap-3">
-              <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-neon-300/30 to-neon-600/20 ring-1 ring-white/10">
-                <Icon className="h-4 w-4 text-neon-200" />
-              </div>
-              <h2 id="legal-title" className="font-display text-lg font-semibold text-white">
-                {content.title}
-              </h2>
-            </div>
-            <button
-              onClick={onClose}
-              aria-label="Close"
-              className="grid h-9 w-9 place-items-center rounded-full text-neon-100/60 transition hover:bg-white/5 hover:text-white"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
-
-          <div className="max-h-[60vh] overflow-y-auto px-7 py-6">
-            <div className="space-y-4">
-              {content.body.map((para, i) => (
-                <p key={i} className="text-sm leading-relaxed text-neon-100/70">
-                  {para}
-                </p>
-              ))}
-            </div>
-            <p className="mt-6 text-xs text-neon-100/30">Last updated: January 2026</p>
-          </div>
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 rounded-lg p-2 text-neon-100/40 transition hover:text-white"
+        >
+          <X className="h-5 w-5" />
+        </button>
+        <div className="flex items-center gap-3">
+          {isPrivacy ? (
+            <Shield className="h-6 w-6 text-neon-300" />
+          ) : (
+            <FileText className="h-6 w-6 text-neon-300" />
+          )}
+          <h3 className="font-display text-2xl font-bold text-white">
+            {isPrivacy ? 'Privacy Policy' : 'Terms & Conditions'}
+          </h3>
+        </div>
+        <div className="mt-6 space-y-4 text-sm font-light leading-relaxed text-neon-100/60">
+          <p>
+            PaylanceX is a product of Axoryn Technology Pvt. Ltd. By accessing or using our
+            website, you agree to the terms outlined below.
+          </p>
+          {isPrivacy ? (
+            <>
+              <p>
+                We respect your privacy and are committed to protecting your personal data. We
+                collect only the information necessary to provide our services and improve your
+                experience.
+              </p>
+              <p>
+                We do not sell or share your personal information with third parties without your
+                consent. All data is handled in accordance with applicable Indian data protection
+                laws.
+              </p>
+            </>
+          ) : (
+            <>
+              <p>
+                All content on this website is the property of Axoryn Technology Pvt. Ltd. and is
+                protected by applicable intellectual property laws.
+              </p>
+              <p>
+                We reserve the right to modify, update, or discontinue any part of our services at
+                any time without prior notice.
+              </p>
+            </>
+          )}
+          <p className="text-neon-100/40">
+            Last updated: August 2026. For questions, contact support@paylancex.com.
+          </p>
         </div>
       </div>
     </div>
@@ -438,38 +462,51 @@ export function LegalModal({ open, onClose }: LegalModalProps) {
 
 /* ----------------------------- Footer ----------------------------- */
 
-type FooterProps = {
-  onLegal: (which: 'privacy' | 'terms') => void;
-};
-
-export function Footer({ onLegal }: FooterProps) {
+export function Footer({ onLegal }: { onLegal?: (w: 'privacy' | 'terms') => void }) {
   return (
-    <footer className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-10 pt-8 opacity-0 animate-riseIn" style={{ animationDelay: '1.1s' }}>
-      <div className="flex flex-col items-center justify-between gap-6 border-t border-white/5 pt-8 sm:flex-row">
-        <div className="flex items-center gap-2.5">
-          <div className="h-7 w-7 overflow-hidden rounded-lg bg-ink-800 p-0.5 ring-1 ring-white/10">
-          <img src={LOGO_SRC} alt="PaylanceX logo" width={48} height={48} loading="eager" decoding="async" className="h-full w-full object-contain" />
-          </div>
-          <span className="text-sm text-neon-100/50">
-            © 2026 PaylanceX. All Rights Reserved.
-          </span>
+    <footer className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-10 pt-12">
+      <div className="flex flex-col items-center gap-8 border-t border-white/5 pt-8">
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+          <Link to="/" className="text-sm text-neon-100/50 transition hover:text-neon-100">
+            About PaylanceX
+          </Link>
+          <Link to="/founder" className="text-sm text-neon-100/50 transition hover:text-neon-100">
+            Founder
+          </Link>
+          <Link to="/contact" className="text-sm text-neon-100/50 transition hover:text-neon-100">
+            Contact
+          </Link>
+          {onLegal && (
+            <>
+              <button
+                onClick={() => onLegal('privacy')}
+                className="text-sm text-neon-100/50 transition hover:text-neon-100"
+              >
+                Privacy Policy
+              </button>
+              <button
+                onClick={() => onLegal('terms')}
+                className="text-sm text-neon-100/50 transition hover:text-neon-100"
+              >
+                Terms &amp; Conditions
+              </button>
+            </>
+          )}
         </div>
 
-        <nav className="flex items-center gap-2">
-          <button
-            onClick={() => onLegal('privacy')}
-            className="rounded-lg px-3 py-2 text-sm text-neon-100/50 transition hover:text-neon-100"
-          >
-            Privacy Policy
-          </button>
-          <span className="text-neon-100/20">·</span>
-          <button
-            onClick={() => onLegal('terms')}
-            className="rounded-lg px-3 py-2 text-sm text-neon-100/50 transition hover:text-neon-100"
-          >
-            Terms of Service
-          </button>
-        </nav>
+        <div className="flex flex-col items-center gap-1 text-center">
+          <div className="flex items-center gap-2.5">
+            <div className="grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br from-neon-400 to-neon-600">
+              <span className="font-display text-xs font-bold text-white">P</span>
+            </div>
+            <span className="text-sm text-neon-100/50">
+              © 2026 PaylanceX. All Rights Reserved.
+            </span>
+          </div>
+          <p className="text-xs text-neon-100/40">
+            PaylanceX is a product of Axoryn Technology Pvt. Ltd.
+          </p>
+        </div>
       </div>
     </footer>
   );

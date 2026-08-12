@@ -1,24 +1,18 @@
 import { useEffect } from 'react';
 
-/* ----------------------------- Types ----------------------------- */
+export const SITE_URL = 'https://paylancex.com';
 
-type SEOConfig = {
+type SEOProps = {
   title: string;
   description: string;
-  canonical: string;
+  canonical?: string;
   ogType?: string;
   ogImage?: string;
-  noIndex?: boolean;
-  jsonLd?: object | object[];
+  jsonLd?: object[];
 };
 
-const SITE_URL = 'https://paylancex.com';
-const DEFAULT_OG_IMAGE = `${SITE_URL}/WhatsApp_Image_2026-05-27_at_12.55.50_AM-removebg-preview.png`;
-
-/* ----------------------------- Helpers ----------------------------- */
-
-function setMeta(attr: 'name' | 'property', key: string, content: string) {
-  let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
+function upsertMeta(attr: 'name' | 'property', key: string, content: string) {
+  let el = document.querySelector(`meta[${attr}="${key}"]`) as HTMLMetaElement | null;
   if (!el) {
     el = document.createElement('meta');
     el.setAttribute(attr, key);
@@ -27,8 +21,8 @@ function setMeta(attr: 'name' | 'property', key: string, content: string) {
   el.setAttribute('content', content);
 }
 
-function setLink(rel: string, href: string) {
-  let el = document.head.querySelector<HTMLLinkElement>(`link[rel="${rel}"]`);
+function upsertLink(rel: string, href: string) {
+  let el = document.querySelector(`link[rel="${rel}"]`) as HTMLLinkElement | null;
   if (!el) {
     el = document.createElement('link');
     el.setAttribute('rel', rel);
@@ -37,87 +31,43 @@ function setLink(rel: string, href: string) {
   el.setAttribute('href', href);
 }
 
-function setJsonLd(id: string, data: object | object[]) {
-  let script = document.getElementById(id);
-  if (!script) {
-    script = document.createElement('script');
-    script.id = id;
-    script.setAttribute('type', 'application/ld+json');
-    document.head.appendChild(script);
+function upsertJsonLd(id: string, data: object) {
+  let el = document.getElementById(id) as HTMLScriptElement | null;
+  if (!el) {
+    el = document.createElement('script');
+    el.type = 'application/ld+json';
+    el.id = id;
+    document.head.appendChild(el);
   }
-  script.textContent = JSON.stringify(data);
+  el.textContent = JSON.stringify(data);
 }
-
-function removeJsonLd(id: string) {
-  document.getElementById(id)?.remove();
-}
-
-function removeMeta(attr: 'name' | 'property', key: string) {
-  document.head.querySelector(`meta[${attr}="${key}"]`)?.remove();
-}
-
-/* ----------------------------- Hook ----------------------------- */
-
-export function useSEO(config: SEOConfig) {
-  const { title, description, canonical, ogType = 'website', ogImage = DEFAULT_OG_IMAGE, noIndex = false, jsonLd } = config;
-
-  useEffect(() => {
-    document.title = title;
-
-    // Standard meta
-    setMeta('name', 'description', description);
-
-    // Robots
-    if (noIndex) {
-      setMeta('name', 'robots', 'noindex, nofollow');
-    } else {
-      removeMeta('name', 'robots');
-    }
-
-    // Canonical
-    setLink('canonical', canonical);
-
-    // Open Graph
-    setMeta('property', 'og:title', title);
-    setMeta('property', 'og:description', description);
-    setMeta('property', 'og:type', ogType);
-    setMeta('property', 'og:url', canonical);
-    setMeta('property', 'og:image', ogImage);
-    setMeta('property', 'og:site_name', 'PaylanceX');
-    setMeta('property', 'og:locale', 'en_US');
-
-    // Twitter Card
-    setMeta('name', 'twitter:card', 'summary_large_image');
-    setMeta('name', 'twitter:title', title);
-    setMeta('name', 'twitter:description', description);
-    setMeta('name', 'twitter:image', ogImage);
-
-    // JSON-LD
-    if (jsonLd) {
-      setJsonLd('page-jsonld', jsonLd);
-    }
-
-    return () => {
-      removeJsonLd('page-jsonld');
-    };
-  }, [title, description, canonical, ogType, ogImage, noIndex, jsonLd]);
-}
-
-/* ----------------------------- Shared JSON-LD Schemas ----------------------------- */
 
 export const ORGANIZATION_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  name: 'PaylanceX',
+  name: 'Axoryn Technology Pvt. Ltd.',
+  alternateName: 'Axoryn Technology',
   url: SITE_URL,
-  logo: `${SITE_URL}/WhatsApp_Image_2026-05-27_at_12.55.50_AM-removebg-preview.png`,
+  logo: `${SITE_URL}/logo.png`,
   description:
-    'PaylanceX is a technology company building thoughtful, reliable, and future-ready products.',
+    'Axoryn Technology Pvt. Ltd. is an Indian technology company building next-generation digital products, secure financial technology, AI-powered software, and scalable platforms for the future.',
   founder: {
     '@type': 'Person',
     name: 'Aryan Gupta',
     jobTitle: 'Founder & CEO',
   },
+  brand: {
+    '@type': 'Brand',
+    name: 'PaylanceX',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Sabji Mandi Gali, Madhuban, Mau',
+    addressLocality: 'Mau',
+    addressRegion: 'Uttar Pradesh',
+    addressCountry: 'IN',
+  },
+  email: 'support@paylancex.com',
   sameAs: ['https://www.linkedin.com/in/aryan-gupta-823b74252'],
 };
 
@@ -125,13 +75,13 @@ export const WEBSITE_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'PaylanceX',
+  alternateName: 'PaylanceX',
   url: SITE_URL,
   description:
-    'PaylanceX — building the future of technology. Something extraordinary is coming.',
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: `${SITE_URL}/founder`,
-    'url-template': `${SITE_URL}/founder`,
+    'PaylanceX is an innovative fintech startup developed by Axoryn Technology Pvt. Ltd., an Indian technology company building secure and modern digital solutions.',
+  publisher: {
+    '@type': 'Organization',
+    name: 'Axoryn Technology Pvt. Ltd.',
   },
 };
 
@@ -140,13 +90,37 @@ export const PERSON_SCHEMA = {
   '@type': 'Person',
   name: 'Aryan Gupta',
   jobTitle: 'Founder & CEO',
+  url: `${SITE_URL}/founder`,
+  image: `${SITE_URL}/aryan-gupta.jpg`,
   worksFor: {
     '@type': 'Organization',
-    name: 'PaylanceX',
+    name: 'Axoryn Technology Pvt. Ltd.',
   },
-  url: `${SITE_URL}/founder`,
-  image: `${SITE_URL}/WhatsApp_Image_2026-07-16_at_10.29.36_AM.jpeg`,
   sameAs: ['https://www.linkedin.com/in/aryan-gupta-823b74252'],
 };
 
-export { SITE_URL };
+export function useSEO({ title, description, canonical, ogType, ogImage, jsonLd }: SEOProps) {
+  useEffect(() => {
+    document.title = title;
+    upsertMeta('name', 'title', title);
+    upsertMeta('name', 'description', description);
+    upsertMeta('property', 'og:title', title);
+    upsertMeta('property', 'og:description', description);
+    upsertMeta('property', 'og:type', ogType || 'website');
+    upsertMeta('name', 'twitter:title', title);
+    upsertMeta('name', 'twitter:description', description);
+    if (canonical) {
+      upsertLink('canonical', canonical);
+      upsertMeta('property', 'og:url', canonical);
+    }
+    if (ogImage) {
+      upsertMeta('property', 'og:image', ogImage);
+      upsertMeta('name', 'twitter:image', ogImage);
+    }
+    if (jsonLd) {
+      jsonLd.forEach((schema, i) => {
+        upsertJsonLd(`jsonld-${i}`, schema);
+      });
+    }
+  }, [title, description, canonical, ogType, ogImage, jsonLd]);
+}

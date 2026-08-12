@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Allow: /founder
+Allow: /about
+Allow: /contact
 
 Sitemap: https://paylancex.com/sitemap.xml
