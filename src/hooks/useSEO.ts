@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 
 export const SITE_URL = 'https://paylancex.com';
+export const FOUNDER_IMAGE_PATH = '/assets/WhatsApp_Image_2026-07-16_at_10.29.36_AM.jpeg';
+export const FOUNDER_IMAGE_URL = `${SITE_URL}${FOUNDER_IMAGE_PATH}`;
 
 type SEOProps = {
   title: string;
@@ -91,7 +93,7 @@ export const PERSON_SCHEMA = {
   name: 'Aryan Gupta',
   jobTitle: 'Founder & CEO',
   url: `${SITE_URL}/founder`,
-  image: `${SITE_URL}/aryan-gupta.jpg`,
+  image: FOUNDER_IMAGE_URL,
   worksFor: {
     '@type': 'Organization',
     name: 'Axoryn Technology Pvt. Ltd.',

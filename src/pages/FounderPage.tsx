@@ -23,7 +23,13 @@ import {
   Reveal,
   SectionHeading,
 } from '../components/Shared';
-import { useSEO, PERSON_SCHEMA, ORGANIZATION_SCHEMA } from '../hooks/useSEO';
+import {
+  useSEO,
+  PERSON_SCHEMA,
+  ORGANIZATION_SCHEMA,
+  FOUNDER_IMAGE_PATH,
+  FOUNDER_IMAGE_URL,
+} from '../hooks/useSEO';
 
 const FOUNDER_SEO = {
   title: 'Aryan Gupta | Founder & CEO of PaylanceX — Axoryn Technology Pvt. Ltd.',
@@ -31,7 +37,7 @@ const FOUNDER_SEO = {
     'Learn about Aryan Gupta, Founder & CEO of PaylanceX, a startup by Axoryn Technology Pvt. Ltd. — his vision, journey, and mission to build trusted technology.',
   canonical: 'https://paylancex.com/founder',
   ogType: 'profile',
-  ogImage: 'https://paylancex.com/aryan-gupta.jpg',
+  ogImage: FOUNDER_IMAGE_URL,
   jsonLd: [PERSON_SCHEMA, ORGANIZATION_SCHEMA],
 };
 
@@ -72,7 +78,7 @@ function FounderPage() {
                 <div className="absolute inset-0 scale-105 rounded-full bg-neon-400/40 blur-2xl animate-pulseGlow" />
                 <div className="relative h-36 w-36 overflow-hidden rounded-full ring-2 ring-neon-300/50 shadow-[0_0_32px_rgba(77,166,255,0.35)]">
                   <img
-                    src="/aryan-gupta.jpg"
+                    src={FOUNDER_IMAGE_PATH}
                     alt="Aryan Gupta - Founder & CEO of PaylanceX"
                     width={144}
                     height={144}
@@ -171,7 +177,7 @@ function FounderPage() {
                         <div className="absolute inset-0 scale-110 rounded-full bg-neon-400/30 blur-xl animate-pulseGlow" />
                         <div className="relative h-24 w-24 overflow-hidden rounded-full ring-2 ring-neon-300/40 shadow-[0_0_24px_rgba(77,166,255,0.3)]">
                           <img
-                            src="/aryan-gupta.jpg"
+                            src={FOUNDER_IMAGE_PATH}
                             alt="Aryan Gupta - Founder & CEO of PaylanceX"
                             width={96}
                             height={96}

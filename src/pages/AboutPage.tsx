@@ -24,7 +24,7 @@ import {
   Reveal,
   SectionHeading,
 } from '../components/Shared';
-import { useSEO, ORGANIZATION_SCHEMA, WEBSITE_SCHEMA } from '../hooks/useSEO';
+import { useSEO, ORGANIZATION_SCHEMA, WEBSITE_SCHEMA, FOUNDER_IMAGE_PATH } from '../hooks/useSEO';
 
 const ABOUT_SEO = {
   title: 'About PaylanceX | A Startup by Axoryn Technology Pvt. Ltd.',
@@ -147,7 +147,7 @@ function AboutPage() {
                     <div className="absolute inset-0 scale-110 rounded-full bg-neon-400/30 blur-xl animate-pulseGlow" />
                     <div className="relative h-28 w-28 overflow-hidden rounded-full ring-2 ring-neon-300/40 shadow-[0_0_24px_rgba(77,166,255,0.3)]">
                       <img
-                        src="/aryan-gupta.jpg"
+                        src={FOUNDER_IMAGE_PATH}
                         alt="Aryan Gupta - Founder & CEO of PaylanceX"
                         width={112}
                         height={112}
