@@ -48,7 +48,7 @@ export const ORGANIZATION_SCHEMA = {
   name: 'Axoryn Technology Pvt. Ltd.',
   alternateName: 'Axoryn Technology',
   url: SITE_URL,
-  logo: `${SITE_URL}/logo.png`,
+  logo: `${SITE_URL}/WhatsApp_Image_2026-05-27_at_12.55.50_AM-removebg-preview.png`,
   description:
     'Axoryn Technology Pvt. Ltd. is an Indian technology company building next-generation digital products, secure financial technology, AI-powered software, and scalable platforms for the future.',
   founder: {

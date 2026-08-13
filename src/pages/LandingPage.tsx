@@ -25,7 +25,7 @@ function LandingPage() {
     description:
       'PaylanceX is an innovative fintech startup developed by Axoryn Technology Pvt. Ltd., an Indian technology company building secure and modern digital solutions.',
     canonical: 'https://paylancex.com/',
-    ogImage: 'https://paylancex.com/logo.png',
+    ogImage: 'https://paylancex.com/WhatsApp_Image_2026-05-27_at_12.55.50_AM-removebg-preview.png',
     jsonLd: [ORGANIZATION_SCHEMA, WEBSITE_SCHEMA],
   });
   useReveal();

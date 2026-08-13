@@ -58,12 +58,19 @@ export function Particles({ count = 30 }: { count?: number }) {
 
 /* ----------------------------- Navbar ----------------------------- */
 
+export const LOGO_SRC = '/WhatsApp_Image_2026-05-27_at_12.55.50_AM-removebg-preview.png';
+
 export function Logo() {
   return (
     <Link to="/" className="flex items-center gap-2.5">
-      <div className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-neon-400 to-neon-600 shadow-[0_0_16px_rgba(77,166,255,0.4)]">
-        <span className="font-display text-sm font-bold text-white">P</span>
-      </div>
+      <img
+        src={LOGO_SRC}
+        alt="PaylanceX"
+        width={32}
+        height={32}
+        className="h-8 w-8 rounded-lg object-contain"
+        draggable={false}
+      />
       <span className="font-display text-lg font-bold text-white">PaylanceX</span>
     </Link>
   );
@@ -502,9 +509,14 @@ export function Footer({ onLegal }: { onLegal?: (w: 'privacy' | 'terms') => void
 
         <div className="flex flex-col items-center gap-1 text-center">
           <div className="flex items-center gap-2.5">
-            <div className="grid h-7 w-7 place-items-center rounded-lg bg-gradient-to-br from-neon-400 to-neon-600">
-              <span className="font-display text-xs font-bold text-white">P</span>
-            </div>
+            <img
+              src={LOGO_SRC}
+              alt="PaylanceX"
+              width={28}
+              height={28}
+              className="h-7 w-7 rounded-lg object-contain"
+              draggable={false}
+            />
             <span className="text-sm text-neon-100/50">
               © 2026 PaylanceX. All Rights Reserved.
             </span>
